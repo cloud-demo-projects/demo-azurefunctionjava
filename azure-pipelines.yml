@@ -62,13 +62,11 @@ stages:
     strategy:
       runOnce:
         deploy:
-
           steps:
           - task: AzureFunctionApp@1
             displayName: 'Azure functions app deploy'
             inputs:
               azureSubscription: '$(azureSubscription)'
-              appType: 'functionApp'
+              appType: 'functionAppLinux'
               appName: '$(functionAppName)'
-              package: '''$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'''
-              deploymentMethod: 'auto'
+              package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
