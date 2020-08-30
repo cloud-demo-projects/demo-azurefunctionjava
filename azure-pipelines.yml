@@ -82,5 +82,9 @@ stages:
               appType: 'functionAppLinux'
               WebAppName: 'demo-functions19'
               enableCustomDeployment: true
-              DeploymentType: 'zipDeploy'
-              TakeAppOfflineFlag: false
+              DeploymentType: 'runFromZip'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
