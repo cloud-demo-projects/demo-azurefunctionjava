@@ -42,11 +42,19 @@ stages:
       displayName: 'Copy Files to artifact staging directory'
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
+        Contents: '**/azure-functions/**  '
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - upload: $(Build.ArtifactStagingDirectory)
       artifact: drop
+      
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/target/azure-functions/$(functionAppName)'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
 
 - stage: Deploy
   displayName: Deploy stage
