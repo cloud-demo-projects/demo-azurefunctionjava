@@ -53,6 +53,13 @@ stages:
         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
         replaceExistingArchive: true
 
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+    
+
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
@@ -83,8 +90,4 @@ stages:
               WebAppName: 'demo-functions19'
               enableCustomDeployment: true
               DeploymentType: 'runFromZip'
-          - task: PublishBuildArtifacts@1
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-              ArtifactName: 'drop'
-              publishLocation: 'Container'
+          
