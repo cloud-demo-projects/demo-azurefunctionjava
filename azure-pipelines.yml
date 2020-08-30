@@ -60,34 +60,34 @@ stages:
         publishLocation: 'Container'
     
 
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy
-    environment: 'development'
-    pool:
-      vmImage: $(vmImageName)
+# - stage: Deploy
+#   displayName: Deploy stage
+#   dependsOn: Build
+#   condition: succeeded()
+#   jobs:
+#   - deployment: Deploy
+#     displayName: Deploy
+#     environment: 'development'
+#     pool:
+#       vmImage: $(vmImageName)
 
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          # - task: AzureFunctionApp@1
-          #   displayName: 'Azure functions app deploy'
-          #   inputs:
-          #     azureSubscription: 'Nipun Bahri Subscription (bf0f6779-86d2-467e-8226-10f92a8ad378)'
-          #     appType: 'functionAppLinux'
-          #     appName: 'demo-functions19'
-          #     package: '$(Pipeline.Workspace)/a/*.zip'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'azure-rm-service-conn'
-              appType: 'functionAppLinux'
-              WebAppName: 'demo-functions19'
-              enableCustomDeployment: true
-              DeploymentType: 'runFromZip'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           # - task: AzureFunctionApp@1
+#           #   displayName: 'Azure functions app deploy'
+#           #   inputs:
+#           #     azureSubscription: 'Nipun Bahri Subscription (bf0f6779-86d2-467e-8226-10f92a8ad378)'
+#           #     appType: 'functionAppLinux'
+#           #     appName: 'demo-functions19'
+#           #     package: '$(Pipeline.Workspace)/a/*.zip'
+#           - task: AzureRmWebAppDeployment@4
+#             inputs:
+#               ConnectionType: 'AzureRM'
+#               azureSubscription: 'azure-rm-service-conn'
+#               appType: 'functionAppLinux'
+#               WebAppName: 'demo-functions19'
+#               enableCustomDeployment: true
+#               DeploymentType: 'runFromZip'
           
