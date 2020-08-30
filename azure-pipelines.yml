@@ -34,19 +34,16 @@ stages:
         mavenAuthenticateFeed: false
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
-        checkStyleRunAnalysis: true
-        pmdRunAnalysis: true
-        findBugsRunAnalysis: true
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/azure-functions/**  '
+        Contents: '**/azure-functions/**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
-    - upload: $(Build.ArtifactStagingDirectory)
-      artifact: drop
+    # - publish: $(Build.ArtifactStagingDirectory)
+    #   artifact: drop
       
     - task: ArchiveFiles@2
       inputs:
@@ -71,10 +68,19 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: AzureFunctionApp@1
-            displayName: 'Azure functions app deploy'
+          # - task: AzureFunctionApp@1
+          #   displayName: 'Azure functions app deploy'
+          #   inputs:
+          #     azureSubscription: 'Nipun Bahri Subscription (bf0f6779-86d2-467e-8226-10f92a8ad378)'
+          #     appType: 'functionAppLinux'
+          #     appName: 'demo-functions19'
+          #     package: '$(Pipeline.Workspace)/a/*.zip'
+          - task: AzureRmWebAppDeployment@4
             inputs:
-              azureSubscription: 'Nipun Bahri Subscription (bf0f6779-86d2-467e-8226-10f92a8ad378)'
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'azure-rm-service-conn'
               appType: 'functionAppLinux'
-              appName: 'demo-functions19'
-              package: '$(Pipeline.Workspace)/a/*.zip'
+              WebAppName: 'demo-functions19'
+              enableCustomDeployment: true
+              DeploymentType: 'zipDeploy'
+              TakeAppOfflineFlag: false
