@@ -77,4 +77,4 @@ stages:
               azureSubscription: 'Nipun Bahri Subscription (bf0f6779-86d2-467e-8226-10f92a8ad378)'
               appType: 'functionAppLinux'
               appName: 'demo-functions19'
-              package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
+              package: '$(Pipeline.Workspace)/**/*.zip'
