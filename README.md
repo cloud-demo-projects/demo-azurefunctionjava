@@ -1,1 +1,1 @@
-"# demo-functions" 
+This repository contains the sameple Java Azure function.
